@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --font-arabic: "Tajawal", "Nunito", sans-serif;
+  --font-sans: "Nunito", "Tajawal", sans-serif;
+  
+  --color-nafas-primary: #1A3C5E;
+  --color-nafas-secondary: #E8F4FD;
+  --color-nafas-bg: #F5F0EB;
+}
+
+body {
+  background-color: var(--color-nafas-bg);
+  color: var(--color-nafas-primary);
+}
+
+.dir-ltr {
+  direction: ltr;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
