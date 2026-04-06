@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
 import { ShieldAlert, Home, BookHeart, BookOpen, Shield } from 'lucide-react';
 import { cn } from './lib/utils';
+import { db } from './lib/db';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -13,6 +14,7 @@ import Emergency from './pages/Emergency';
 import Vault from './pages/Vault';
 import Diary from './pages/Diary';
 import Library from './pages/Library';
+import Onboarding from './pages/Onboarding';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -77,6 +79,28 @@ function NavItem({ icon, label, active, onClick }: { icon: React.ReactNode, labe
 }
 
 export default function App() {
+  const [userName, setUserName] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    db.getUserName().then(name => {
+      setUserName(name);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-nafas-bg flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-nafas-secondary border-t-nafas-primary rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!userName) {
+    return <Onboarding onComplete={(name) => setUserName(name)} />;
+  }
+
   return (
     <BrowserRouter>
       <Layout>

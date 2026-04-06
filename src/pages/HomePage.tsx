@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { ShieldAlert, Heart, BookOpen, Shield } from 'lucide-react';
+import { db } from '../lib/db';
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    db.getUserName().then(name => setUserName(name || ''));
+  }, []);
 
   return (
     <div className="p-6 flex flex-col h-full">
       <header className="mb-8 mt-4">
-        <h1 className="text-3xl font-bold text-nafas-primary mb-2">مرحباً بك في نَفَس</h1>
+        <h1 className="text-3xl font-bold text-nafas-primary mb-2">
+          مرحباً بك{userName ? ` يا ${userName}` : ''}
+        </h1>
         <p className="text-gray-600">نحن هنا معك. كيف يمكننا مساعدتك اليوم؟</p>
       </header>
 
