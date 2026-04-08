@@ -40,23 +40,32 @@ function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       {!isCrisisMode && (
-        <nav className="absolute bottom-0 w-full bg-white border-t border-nafas-secondary/50 px-6 py-3 flex justify-between items-center z-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
-          <NavItem icon={<Home size={24} />} label="الرئيسية" path="/" active={location.pathname === '/'} onClick={() => navigate('/')} />
-          <NavItem icon={<BookHeart size={24} />} label="يومياتي" path="/diary" active={location.pathname === '/diary'} onClick={() => navigate('/diary')} />
+        <nav className="absolute bottom-0 w-full bg-white/90 backdrop-blur-md border-t border-nafas-secondary/30 px-6 py-4 flex justify-between items-center z-50 rounded-t-[2rem] shadow-[0_-10px_40px_rgba(26,60,94,0.05)] pb-safe">
+          <NavItem icon={<Home size={24} strokeWidth={2.5} />} label="الرئيسية" path="/" active={location.pathname === '/'} onClick={() => navigate('/')} />
+          <NavItem icon={<BookHeart size={24} strokeWidth={2.5} />} label="يومياتي" path="/diary" active={location.pathname === '/diary'} onClick={() => navigate('/diary')} />
           
           {/* Panic Button in Nav */}
-          <div className="relative -top-8">
-            <button 
+          <div className="relative -top-10 flex items-center justify-center">
+            <motion.div 
+              animate={{ scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+              className="absolute w-14 h-14 bg-nafas-primary/40 rounded-full"
+            />
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              animate={{ scale: [1, 1.03, 1] }}
+              transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
               onClick={() => navigate('/crisis')}
-              className="bg-nafas-primary text-white p-4 rounded-full shadow-lg hover:scale-105 transition-transform flex flex-col items-center justify-center h-16 w-16 border-4 border-nafas-bg"
+              className="bg-nafas-primary text-white p-4 rounded-full shadow-xl shadow-nafas-primary/30 flex flex-col items-center justify-center h-16 w-16 border-[6px] border-nafas-bg relative z-10"
               aria-label="زر الطوارئ"
             >
-              <ShieldAlert size={28} />
-            </button>
+              <ShieldAlert size={28} strokeWidth={2.5} />
+            </motion.button>
           </div>
 
-          <NavItem icon={<Shield size={24} />} label="خطة الأمان" path="/safety-plan" active={location.pathname === '/safety-plan'} onClick={() => navigate('/safety-plan')} />
-          <NavItem icon={<BookOpen size={24} />} label="المكتبة" path="/library" active={location.pathname === '/library'} onClick={() => navigate('/library')} />
+          <NavItem icon={<Shield size={24} strokeWidth={2.5} />} label="خطة الأمان" path="/safety-plan" active={location.pathname === '/safety-plan'} onClick={() => navigate('/safety-plan')} />
+          <NavItem icon={<BookOpen size={24} strokeWidth={2.5} />} label="المكتبة" path="/library" active={location.pathname === '/library'} onClick={() => navigate('/library')} />
         </nav>
       )}
     </div>
@@ -68,12 +77,12 @@ function NavItem({ icon, label, active, onClick }: { icon: React.ReactNode, labe
     <button 
       onClick={onClick}
       className={cn(
-        "flex flex-col items-center gap-1 transition-colors",
-        active ? "text-nafas-primary font-bold" : "text-gray-400 hover:text-nafas-primary/70"
+        "flex flex-col items-center gap-1.5 transition-all duration-300",
+        active ? "text-nafas-primary font-bold scale-110" : "text-gray-400 hover:text-nafas-primary/60"
       )}
     >
       {icon}
-      <span className="text-[10px]">{label}</span>
+      <span className="text-[10px] tracking-wide">{label}</span>
     </button>
   );
 }
